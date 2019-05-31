@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+      MYSQL_USER: panupongdeve
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/db:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8888:80
+  web:
+    build:
+      context: .
+      dockerfile: ./container/php.Dockerfile
+    container_name: web
+    depends_on:
+      - mysql
+    volumes:
+      - ./php/:/var/www/html/
+    ports:
+      - "9000:80"
+    stdin_open: true
+    tty: true
+  caddy:
+    image: abiosoft/caddy:php
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy/Caddyfile:/etc/Caddyfile
+      - ./caddy/.caddy:/root/.caddy
+    volumes_from:
+      - web
+    network_mode: host
+    restart: always
