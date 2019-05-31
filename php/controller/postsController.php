@@ -1,5 +1,6 @@
 <?php 
 
+
 class Post {
     var $id = '';
     var $title = '';
@@ -19,10 +20,8 @@ class Post {
 
 function insert_post(){
     global $connection;
-    $user = exec('whoami');
-    echo $user;
+    global $root_path;
     
-    $root_path = $_SERVER["DOCUMENT_ROOT"];
     if(isset($_POST['create_post'])){
         $post_image =  mysqli_real_escape_string($connection,$_FILES['post_image']['name']);
         $post_image_temp =  mysqli_real_escape_string($connection,$_FILES['post_image']['tmp_name']);
@@ -35,11 +34,49 @@ function insert_post(){
                 mysqli_real_escape_string($connection,$_POST['post_body']), 
                 $post_image
             );
-        echo $post->title;
-        echo "<br>";
-        echo $post->body;
-        echo "<br>";
-        echo $post->image;
+
+
+		$query = "INSERT INTO posts(post_title, post_body, post_image) ";
+		$query .= "VALUES('{$post->title}', '{$post->body}', '{$post->image}')";
+	
+		$create_post = mysqli_query($connection, $query);
+        
+        if ($create_post) {
+            echo "<script>alert(\"Success\")</script>";
+        } else {
+            die('QUERY FAILED'. mysqli_error($connection));
+        }
+        
+    }
+}
+
+function get_posts() {
+    global $connection;
+    
+    $query = "SELECT * FROM posts";
+    $select_posts = mysqli_query($connection,$query);
+    while($row = mysqli_fetch_assoc($select_posts)){
+        $post =
+            new Post(
+                $row['id'],
+                $row['post_title'],
+                $row['post_body'],
+                $row['post_image']
+            );
+        
+        echo "<tr>";
+        echo "<td>$post->id</td>";
+        echo "<td>
+                <img src=\" /resource/images/$post->image \" width=\"128\" height=\"128\">
+            </td>";
+        echo "<td>$post->title</td>";
+        echo " <td>
+                    <div class=\"flex__row\">
+                        <a href=\"/admin/posts/edit.php\" class=\"mui-btn mui-btn--small mui-btn--primary\">Edit</a>
+                        <a class=\"mui-btn mui-btn--small mui-btn--danger\">Delete</a>
+                    </div>
+                </td>";
+        echo "</tr>";
     }
 }
 

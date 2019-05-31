@@ -29,21 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Cell 1-1</td>
-                        <td>Cell 1-2</td>
-                        <td>Cell 1-3</td>
-                        <td>
-                            <div class="flex__row">
-                                <a href="/admin/posts/edit.php" class="mui-btn mui-btn--small mui-btn--primary">Edit</a>
-                                <button class="mui-btn mui-btn--small mui-btn--danger">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cell 2-1</td>
-                        <td>Cell 2-2</td>
-                    </tr>
+                    <?php get_posts(); ?>
                 </tbody>
             </table>
 

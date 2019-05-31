@@ -1,5 +1,5 @@
 <?php 
-
+$root_path = $_SERVER["DOCUMENT_ROOT"];
 $db['db_host'] = "mysql";
 $db['db_user'] = "panupongdeve";
 $db['db_pass'] = "password";
