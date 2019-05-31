@@ -2,6 +2,8 @@
 <?php include "../../controller/postsController.php" ?>
 <?php include "../../components/header.php" ?>
 
+
+
 <div class="mui-col-md-8 margin-top--25">
     <div class="mui-row">
         <div class="mui-col-md-offset-6"></div>
