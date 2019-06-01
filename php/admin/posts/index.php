@@ -1,7 +1,7 @@
 <?php include "../../components/db.php" ?>
 <?php include "../../controller/postsController.php" ?>
 <?php include "../../components/header.php" ?>
-
+<?php deletePost(); ?>
 
 
 <div class="mui-col-md-8 margin-top--25">
@@ -39,5 +39,6 @@
     </div>
 
 </div>
+
 
 <?php include "../../components/footer.php" ?>

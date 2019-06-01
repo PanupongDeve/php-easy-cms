@@ -73,11 +73,25 @@ function get_posts() {
         echo " <td>
                     <div class=\"flex__row\">
                         <a href=\"/admin/posts/edit.php\" class=\"mui-btn mui-btn--small mui-btn--primary\">Edit</a>
-                        <a class=\"mui-btn mui-btn--small mui-btn--danger\">Delete</a>
+                        <a href=\"/admin/posts/index.php?delete=$post->id\" class=\"mui-btn mui-btn--small mui-btn--danger\">Delete</a>
                     </div>
                 </td>";
         echo "</tr>";
     }
+}
+
+
+function deletePost(){
+    global $connection;
+	if(isset($_GET['delete'])){
+	  $the_post_id = $_GET['delete'];
+	  $query = "DELETE FROM posts WHERE id = {$the_post_id}";
+      $delete_query = mysqli_query($connection, $query);
+      if ($delete_query) {
+        echo "<script>location.assign('/admin/posts');</script>";
+      }
+      
+	}
 }
 
 ?>
